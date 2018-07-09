@@ -12,7 +12,7 @@ namespace HybridCsharpAngular.Controllers
     public class RouteController : Controller
     {
 
-        string view = "~/angular/index.cshtml";
+        string view = "~/app/index.cshtml";
 
 
         [Route("~/")]

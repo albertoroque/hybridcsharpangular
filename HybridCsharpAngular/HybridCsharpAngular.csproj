@@ -196,11 +196,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="angular\home\partials\home.tpl.html" />
-    <None Include="angular\index.cshtml" />
-    <Content Include="angular\loja\partials\view.tpl.html" />
-    <Content Include="angular\news\partials\news.tpl.html" />
-    <Content Include="angular\news\partials\list.tpl.html" />
+    <Content Include="app\home\partials\home.tpl.html" />
+    <None Include="app\index.cshtml" />
+    <Content Include="app\loja\partials\view.tpl.html" />
+    <Content Include="app\news\partials\news.tpl.html" />
+    <Content Include="app\news\partials\list.tpl.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Global.asax" />
     <Content Include="Areas\HelpPage\Views\Web.config" />

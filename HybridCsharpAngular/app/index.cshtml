@@ -113,10 +113,7 @@
         // ------ VIRTUAL PAGES GOOGLE ANALITYCS ------------
         .run(["$rootScope", function ($rootScope) {
 
-
-            $rootScope.$on("$routeChangeStart", function (event, next, current) {
-                console.log('next', next, next.title);
-
+            $rootScope.$on("$routeChangeStart", function (event, next, current) {                
                 window.changePageTitle(next.title);
             })
         }])
@@ -129,23 +126,23 @@
                 $routeProvider
                     .when('/', {
                         controller: 'CatalokoCtrl',
-                        templateUrl: 'angular/home/partials/home.tpl.html',
+                        templateUrl: 'app/home/partials/home.tpl.html',
                         title: 'Catáloko'
                     })
                     .when('/noticias', {
                         controller: 'CatalokoCtrl',
-                        templateUrl: 'angular/news/partials/list.tpl.html',
+                        templateUrl: 'app/news/partials/list.tpl.html',
                         title: 'Notícias'
                     })
                     .when('/n/:title/:id', {
                         controller: 'CatalokoCtrl',
-                        templateUrl: 'angular/news/partials/news.tpl.html',
+                        templateUrl: 'app/news/partials/news.tpl.html',
                         title: 'Notícias'
                     })
 
                     .when('/loja', {
                         controller: 'CatalokoCtrl',
-                        templateUrl: 'angular/loja/partials/view.tpl.html',
+                        templateUrl: 'app/loja/partials/view.tpl.html',
                         title: 'Store'
                     })
 
