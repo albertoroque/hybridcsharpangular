@@ -1,31 +1,164 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    Layout = null;
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!DOCTYPE html>
+<html data-ng-app="Proj" ng-controller="CatalokoCtrl" lang="pt-br">
+<head>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <base href="/" />
+
+    <meta charset="utf-8" />
+
+    <title>@ViewBag.title</title>
+
+    <meta name="description" content="@ViewBag.description" />
+
+    <meta http-equiv="Content-Language" content="pt-br">
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="keywords" content="">
+
+    <meta name="author" content="Catáloko | Alberto Roque">
+
+    <meta name="robots" content="index,follow">
+
+    <meta name="distribution" content="global">
+
+    <meta name="copyright" content="Copyright(c) 2018 Catáloko">
+
+    <meta property="og:title" content="@ViewBag.title" />
+
+    <meta property="og:image" content="@ViewBag.image" />
+
+    <meta property="og:description" content="@ViewBag.description" />
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+</head>
+
+<body id="conteudo-principal">
+
+    <div layout="row" flex="100">
+        <md-button ng-click="$root.irPara('')">
+            IR PARA HOME
+        </md-button>
+
+        <md-button ng-click="$root.irPara('noticias')">
+            IR NOTICIAS
+        </md-button>
+
+        <md-button ng-click="$root.irPara('n/titulo/1')">
+            NOTICIA 1
+        </md-button>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <div layout="row" flex="100">
+        <div layout="column" flex ng-view autoscroll="true"></div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-cookies.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+</body>
+
+<script type="text/javascript">
+
+    angular.module('Proj', [
+        'ngRoute',
+        'ngMaterial',
+        'ngCookies',
+        'ngAnimate',
+        'ngMessages',
+    ])
+
+        //---- REDIRECT INICIAL -------------
+        //-----------------------------------
+        .config([
+            '$routeProvider', '$httpProvider', '$locationProvider',
+            function ($routeProvider, $httpProvider, $locationProvider) {
+
+                //$REMOVE_IONIC
+                //$locationProvider.html5Mode(true);
+
+                $httpProvider.defaults.useXDomain = true;
+                delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
+                $routeProvider.otherwise(
+                    {
+                        redirectTo: '/erro/404'
+                    });
+
+            }
+        ])
+
+
+        // ------ VIRTUAL PAGES GOOGLE ANALITYCS ------------
+        .run(["$rootScope", function ($rootScope) {
+
+            window.changePageTitle = function (title) {
+                document.title = title;
+            }
+
+            $rootScope.$on("$routeChangeStart", function (event, next, current) {
+                window.changePageTitle(next.title);
+            })
+        }])
+
+
+
+        .config(['$routeProvider',
+            function ($routeProvider) {
+
+                $routeProvider
+                    .when('/', {
+                        controller: 'CatalokoCtrl',
+                        templateUrl: 'app/home/partials/home.tpl.html',
+                        title: 'Catáloko'
+                    })
+                    .when('/noticias', {
+                        controller: 'CatalokoCtrl',
+                        templateUrl: 'app/news/partials/list.tpl.html',
+                        title: 'Notícias'
+                    })
+                    .when('/n/:title/:id', {
+                        controller: 'CatalokoCtrl',
+                        templateUrl: 'app/news/partials/news.tpl.html',
+                        title: 'Notícias'
+                    })
+
+                    .when('/loja', {
+                        controller: 'CatalokoCtrl',
+                        templateUrl: 'app/loja/partials/view.tpl.html',
+                        title: 'Store'
+                    })
+
+            }])
+
+
+        .controller('CatalokoCtrl', ['$scope', '$rootScope', '$q', '$http', '$window', '$mdToast', '$mdMedia', '$location', '$mdDialog',
+            function ($scope, $rootScope, $q, $http, $window, $mdToast, $mdMedia, $location, $mdDialog) {
+
+                $rootScope.irPara = function (page) {
+                    $location.path(page);
+                }
+
+                $rootScope.changePageTitle = function (title) {
+                    window.changePageTitle(title);
+                }
+
+            }])
+
+
+</script>
+</html>
+
